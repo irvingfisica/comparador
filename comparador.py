@@ -40,7 +40,7 @@ def obtener_datasets_institucion(base_url, org_id):
         # url = f"{base_url}/api/3/action/organization_show?id={org_id}&include_datasets=True"
         r = requests.get(url, timeout=10)
         r.raise_for_status()
-        return r.json().get("result", {}).get("packages", [])
+        return r.json().get("result", {}).get("results", [])
     except Exception as e:
         st.warning(f"No se pudieron obtener datasets: {e}")
         return []
