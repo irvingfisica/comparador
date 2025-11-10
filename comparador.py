@@ -1,8 +1,9 @@
-import streamlit as st
-import requests
-import pandas as pd
 from io import BytesIO
+
 import numpy as np
+import pandas as pd
+import requests
+import streamlit as st
 
 st.set_page_config(page_title="Comparador de bases", layout="wide")
 
@@ -33,7 +34,10 @@ def obtener_instituciones(base_url):
 def obtener_datasets_institucion(base_url, org_id):
     """Obtiene datasets de una institución."""
     try:
-        url = f"{base_url}/api/3/action/organization_show?id={org_id}&include_datasets=True"
+        url = (
+            f"{base_url}/api/3/action/package_search?fq=organization:{org_id}&rows=1000"
+        )
+        # url = f"{base_url}/api/3/action/organization_show?id={org_id}&include_datasets=True"
         r = requests.get(url, timeout=10)
         r.raise_for_status()
         return r.json().get("result", {}).get("packages", [])
